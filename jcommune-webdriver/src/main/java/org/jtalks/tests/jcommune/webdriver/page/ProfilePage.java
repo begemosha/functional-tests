@@ -235,6 +235,15 @@ public class ProfilePage {
     @FindBy(id = "user-dropdown-menu-link")
     private WebElement dropDownMenu;
 
+    @FindBy(css = "label.test-registrationdate")
+    private WebElement registrationDateField;
+    
+    @FindBy(css = "label.test-lastlogin")
+    private WebElement lastLoginField;
+    
+    @FindBy(css = "span.test-posts-count")
+    private WebElement postCountField;
+     
     @FindBy(css = "div.control-group.error")
     List<WebElement> errorFormElements;
 
@@ -429,6 +438,18 @@ public class ProfilePage {
     }
 
     public String getUsername() {return usernameTableField.getText(); }
+    
+    public String getLastLogin() {return lastLoginField.getText(); }
+    
+    public String getRegistrationDate() {return registrationDateField.getText(); }
+    
+    public int getPostCount() { 	 
+    	try {
+    		return Integer.parseInt(postCountField.getText());
+    	} catch (NumberFormatException e) {
+    		throw new NumberFormatException("Couldn't convert Post Count from string to integer!");
+    	}
+    }
 
     public List<WebElement> getErrorFormElements() {
         return errorFormElements;

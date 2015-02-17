@@ -1,5 +1,7 @@
 package org.jtalks.tests.jcommune;
 
+import junit.framework.Assert;
+
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
@@ -354,5 +356,31 @@ public class ProfileTest {
         user.setConfirmPassword(user.getNewPassword());
         user.setCurrentPassword(user.getPassword());
         Users.editPasswordInfo(user);
+    }
+    @Test(groups = "ui-tests")
+    public void shouldNotChangeFieldsValues_ifValidationErrorOccurs() throws Exception {
+    	User user = Users.signUpAndSignIn();
+    	// TODO - Create post to have non-zero value of Post Count
+    	Users.getUserStatistic(user);
+    	user.setFirstName(randomAlphanumeric(16));
+    	user.setLastName(randomAlphanumeric(16));
+    	user.setLocation(randomAlphanumeric(16));
+    	user.setSignature(randomAlphanumeric(64));
+    	user.setPageSize(50);
+    	user.setEmail("");
+    	try {
+    		Users.editMainUserInfo(user);
+    	}
+    	// Validation error due to empty email is expected
+    	catch (ValidationException e) {
+    		// TODO проверить что валидация именно этого поля
+    		e.getMessage().equals(ProfilePage.EMPTY_EMAIL);
+    		// User info and statistic shoudn't change
+    		Users.assertMainUserInfo(user);
+    		Users.assertUserStatistic(user);
+    		return;
+    	}
+    	// If we are here - there was no validation error
+    	junit.framework.Assert.fail("There was no validation error despite empty email.");
     }
 }

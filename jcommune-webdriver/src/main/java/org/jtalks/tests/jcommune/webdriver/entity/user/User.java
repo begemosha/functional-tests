@@ -40,6 +40,10 @@ public class User {
     private boolean autoSubscribe = false;
     private boolean notifyIfSomeoneMentionsYou = false;
     private boolean notifyIfPrivateMessageIsReceived = false;
+    // TODO String representation is dependent on language!
+    private String registrationDate = "";
+    private String lastLogin = "";
+    private int postCount = 0;
 
     public User() {
     }
@@ -175,6 +179,30 @@ public class User {
         user.notifyIfPrivateMessageIsReceived = notifyIfPrivateMessageIsReceived;
         return user;
     }
+    
+	public String getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public String getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(String registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
+	public int getPostCount() {
+		return postCount;
+	}
+
+	public void setPostCount(int postCount) {
+		this.postCount = postCount;
+	}
 
     @Override
     public String toString() {

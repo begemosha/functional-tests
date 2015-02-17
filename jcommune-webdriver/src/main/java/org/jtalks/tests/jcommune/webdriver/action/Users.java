@@ -301,4 +301,18 @@ public class Users {
     public static void assertSecurity(User user) {
         assertEquals(user.getCurrentPassword(), user.getNewPassword());
     }
+
+	public static void assertUserStatistic(User user) {
+		assertEquals("User Registration Date is not as expected", user.getRegistrationDate(), profilePage.getRegistrationDate());
+		assertEquals("User Last login is not as expected", user.getLastLogin(), profilePage.getLastLogin());
+		assertEquals("User Post Count is not as expected", user.getPostCount(), profilePage.getPostCount());
+	}
+    
+	public static void getUserStatistic(User user) {
+		profilePage.clickOnDropDownMenuForUserOnMainPage();
+        profilePage.clickOnProfileInDropDownMenu();
+		user.setLastLogin(profilePage.getLastLogin());
+		user.setRegistrationDate(profilePage.getRegistrationDate());
+		user.setPostCount(profilePage.getPostCount());
+	}
 }
